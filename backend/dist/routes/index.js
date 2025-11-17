@@ -1,0 +1,26 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.apiRouter = void 0;
+const express_1 = require("express");
+const authRoutes_1 = require("../modules/auth/presentation/routes/authRoutes");
+const userRoutes_1 = require("../modules/user/presentation/routes/userRoutes");
+const contentRoutes_1 = require("../modules/content/presentation/routes/contentRoutes");
+const uploadRoutes_1 = require("../modules/upload/presentation/routes/uploadRoutes");
+const transcodingRoutes_1 = require("../modules/transcoding/presentation/routes/transcodingRoutes");
+const streamingRoutes_1 = require("../modules/streaming/presentation/routes/streamingRoutes");
+const paymentRoutes_1 = require("../modules/payment/presentation/routes/paymentRoutes");
+const recommendationRoutes_1 = require("../modules/recommendation/presentation/routes/recommendationRoutes");
+const analyticsRoutes_1 = require("../modules/analytics/presentation/routes/analyticsRoutes");
+const notificationRoutes_1 = require("../modules/notification/presentation/routes/notificationRoutes");
+exports.apiRouter = (0, express_1.Router)();
+exports.apiRouter.use('/auth', authRoutes_1.authRoutes);
+exports.apiRouter.use('/users', userRoutes_1.userRoutes);
+exports.apiRouter.use('/content', contentRoutes_1.contentRoutes);
+exports.apiRouter.use('/upload', uploadRoutes_1.uploadRoutes);
+exports.apiRouter.use('/transcoding', transcodingRoutes_1.transcodingRoutes);
+exports.apiRouter.use('/streaming', streamingRoutes_1.streamingRoutes);
+exports.apiRouter.use('/payments', paymentRoutes_1.paymentRoutes);
+exports.apiRouter.use('/recommendations', recommendationRoutes_1.recommendationRoutes);
+exports.apiRouter.use('/analytics', analyticsRoutes_1.analyticsRoutes);
+exports.apiRouter.use('/notifications', notificationRoutes_1.notificationRoutes);
+//# sourceMappingURL=index.js.map

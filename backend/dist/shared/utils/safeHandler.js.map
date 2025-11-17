@@ -1,0 +1,1 @@
+{"version":3,"file":"safeHandler.js","sourceRoot":"","sources":["../../../src/shared/utils/safeHandler.ts"],"names":[],"mappings":";;;AAIO,MAAM,WAAW,GACtB,CAAC,OAAqB,EAAE,EAAE,CAAC,CAAC,GAAY,EAAE,GAAa,EAAE,IAAkB,EAAQ,EAAE;IACnF,OAAO,CAAC,GAAG,EAAE,GAAG,EAAE,IAAI,CAAC,CAAC,KAAK,CAAC,IAAI,CAAC,CAAC;AACtC,CAAC,CAAC;AAHS,QAAA,WAAW,eAGpB"}
