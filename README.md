@@ -46,11 +46,12 @@ npm run build    # artefatos prontos para deploy
 
 Features principais:
 
-- Hero interativo com health-check e quick actions.
-- Formulário de login conectado ao endpoint `/api/auth/login`.
-- Vitrine de conteúdos e player HLS demo.
-- Roadmap de sprints (12-16) e painel de métricas consumindo `/api/analytics/metrics` (fallback mock).
-- Grade de microserviços e explorer de rotas REST por domínio.
+- Aplicação de streaming completa (Home, Catálogo, Watch e Conta) com React Router e React Query.
+- Autenticação (login/registro) usando Auth Service real, tokens persistidos e proteção de rotas sensíveis.
+- Listagem dinâmica do catálogo (`GET /api/content`) com busca, cards responsivos e imagens geradas por seed.
+- Player HTML5 integrado ao Streaming Service (`/api/streaming/playback/:videoId`) com fallback MP4.
+- Página de conta exibindo perfil + atualização de preferências que conversa com o User Service.
+- Continue Watching alimentado pelo histórico do usuário e recomendações simples no painel lateral.
 
 ## Variáveis de Ambiente
 

@@ -1,4 +1,5 @@
 import { randomUUID } from 'crypto';
+import { hashSync } from 'bcryptjs';
 
 export type UserRecord = {
   id: string;
@@ -54,7 +55,7 @@ export class InMemoryDatabase {
     this.users.set(userId, {
       id: userId,
       email: 'demo@fflix.io',
-      passwordHash: '$2a$10$abcdefghijklmnopqrstuv', // mock hash
+      passwordHash: hashSync('Sup3rSecret!', 10),
       name: 'Demo User',
       roles: ['viewer'],
       preferences: { language: 'pt-BR', theme: 'dark' },

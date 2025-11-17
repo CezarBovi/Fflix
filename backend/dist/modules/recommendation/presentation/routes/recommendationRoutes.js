@@ -9,6 +9,7 @@ const safeHandler_1 = require("../../../../shared/utils/safeHandler");
 const recommendationService = new RecommendationService_1.RecommendationService();
 const controller = new RecommendationController_1.RecommendationController(recommendationService);
 exports.recommendationRoutes = (0, express_1.Router)();
-exports.recommendationRoutes.get('/:userId?', authMiddleware_1.authMiddleware, (0, safeHandler_1.safeHandler)(controller.list));
+exports.recommendationRoutes.get('/', authMiddleware_1.authMiddleware, (0, safeHandler_1.safeHandler)(controller.list));
+exports.recommendationRoutes.get('/:userId', authMiddleware_1.authMiddleware, (0, safeHandler_1.safeHandler)(controller.list));
 exports.recommendationRoutes.post('/feedback', authMiddleware_1.authMiddleware, (0, safeHandler_1.safeHandler)(controller.feedback));
 //# sourceMappingURL=recommendationRoutes.js.map

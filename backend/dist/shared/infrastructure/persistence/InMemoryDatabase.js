@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.InMemoryDatabase = void 0;
 const crypto_1 = require("crypto");
+const bcryptjs_1 = require("bcryptjs");
 class InMemoryDatabase {
     constructor() {
         this.users = new Map();
@@ -22,7 +23,7 @@ class InMemoryDatabase {
         this.users.set(userId, {
             id: userId,
             email: 'demo@fflix.io',
-            passwordHash: '$2a$10$abcdefghijklmnopqrstuv', // mock hash
+            passwordHash: (0, bcryptjs_1.hashSync)('Sup3rSecret!', 10),
             name: 'Demo User',
             roles: ['viewer'],
             preferences: { language: 'pt-BR', theme: 'dark' },

@@ -7,6 +7,7 @@ type PlaybackSession = {
   userId: string;
   manifestUrl: string;
   licenseUrl: string;
+  streamUrl: string;
   lastHeartbeat: Date;
 };
 
@@ -20,6 +21,7 @@ export class StreamingService {
       userId,
       manifestUrl: `${env.cdnBaseUrl}/videos/${videoId}/index.m3u8`,
       licenseUrl: `${env.cdnBaseUrl}/drm/${videoId}`,
+      streamUrl: 'https://storage.googleapis.com/coverr-main/mp4/Mt_Baker.mp4',
       lastHeartbeat: new Date(),
     };
 

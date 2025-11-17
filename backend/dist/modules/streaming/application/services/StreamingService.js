@@ -14,6 +14,7 @@ class StreamingService {
             userId,
             manifestUrl: `${environment_1.env.cdnBaseUrl}/videos/${videoId}/index.m3u8`,
             licenseUrl: `${environment_1.env.cdnBaseUrl}/drm/${videoId}`,
+            streamUrl: 'https://storage.googleapis.com/coverr-main/mp4/Mt_Baker.mp4',
             lastHeartbeat: new Date(),
         };
         this.sessions.set(session.id, session);
