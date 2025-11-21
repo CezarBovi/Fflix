@@ -9,6 +9,9 @@ import { paymentRoutes } from '../modules/payment/presentation/routes/paymentRou
 import { recommendationRoutes } from '../modules/recommendation/presentation/routes/recommendationRoutes';
 import { analyticsRoutes } from '../modules/analytics/presentation/routes/analyticsRoutes';
 import { notificationRoutes } from '../modules/notification/presentation/routes/notificationRoutes';
+import { movieRoutes } from '../modules/metadata/presentation/routes/movieRoutes';
+import { playerRoutes } from '../modules/player/presentation/routes/playerRoutes';
+import { subtitleRoutes } from '../modules/subtitle/presentation/routes/subtitleRoutes';
 
 export const apiRouter = Router();
 
@@ -22,4 +25,7 @@ apiRouter.use('/payments', paymentRoutes);
 apiRouter.use('/recommendations', recommendationRoutes);
 apiRouter.use('/analytics', analyticsRoutes);
 apiRouter.use('/notifications', notificationRoutes);
+apiRouter.use('/metadata', movieRoutes);
+apiRouter.use('/player', playerRoutes);
+apiRouter.use('/subtitles', subtitleRoutes);
 

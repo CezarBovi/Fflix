@@ -4,6 +4,7 @@ import {
 } from '../../../../shared/infrastructure/persistence/InMemoryDatabase';
 import { User, UserProps } from '../../domain/entities/User';
 import { IUserRepository } from '../../domain/repositories/IUserRepository';
+import { NotFoundError } from '../../../../shared/domain/errors/NotFoundError';
 
 export class InMemoryUserRepository implements IUserRepository {
   private readonly db = InMemoryDatabase.getInstance();
@@ -38,7 +39,7 @@ export class InMemoryUserRepository implements IUserRepository {
     const record = this.db.users.get(user.id);
 
     if (!record) {
-      throw new Error('User not found');
+      throw new NotFoundError('Usuário', user.id);
     }
 
     this.db.users.set(user.id, {

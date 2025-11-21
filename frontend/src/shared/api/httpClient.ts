@@ -2,6 +2,8 @@ const DEFAULT_TIMEOUT = 5000;
 
 const getBaseUrl = () => import.meta.env.VITE_API_URL ?? 'http://localhost:4000/api';
 
+export const resolveApiBaseUrl = () => getBaseUrl();
+
 const getAuthToken = () => {
   if (typeof window === 'undefined') {
     return null;

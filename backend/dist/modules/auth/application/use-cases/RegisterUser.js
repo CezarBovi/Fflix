@@ -7,7 +7,7 @@ exports.RegisterUserUseCase = void 0;
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const Email_1 = require("../../domain/value-objects/Email");
 const User_1 = require("../../domain/entities/User");
-const ValidationError_1 = require("../../../../shared/domain/errors/ValidationError");
+const ConflictError_1 = require("../../../../shared/domain/errors/ConflictError");
 class RegisterUserUseCase {
     constructor(userRepository) {
         this.userRepository = userRepository;
@@ -16,7 +16,7 @@ class RegisterUserUseCase {
         const email = Email_1.Email.create(dto.email).value;
         const existing = await this.userRepository.findByEmail(email);
         if (existing) {
-            throw new ValidationError_1.ValidationError('Usuário já existe');
+            throw new ConflictError_1.ConflictError('Usuário já existe');
         }
         const passwordHash = await bcryptjs_1.default.hash(dto.password, 10);
         const user = User_1.User.create({

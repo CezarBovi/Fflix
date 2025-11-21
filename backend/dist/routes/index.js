@@ -12,6 +12,9 @@ const paymentRoutes_1 = require("../modules/payment/presentation/routes/paymentR
 const recommendationRoutes_1 = require("../modules/recommendation/presentation/routes/recommendationRoutes");
 const analyticsRoutes_1 = require("../modules/analytics/presentation/routes/analyticsRoutes");
 const notificationRoutes_1 = require("../modules/notification/presentation/routes/notificationRoutes");
+const movieRoutes_1 = require("../modules/metadata/presentation/routes/movieRoutes");
+const playerRoutes_1 = require("../modules/player/presentation/routes/playerRoutes");
+const subtitleRoutes_1 = require("../modules/subtitle/presentation/routes/subtitleRoutes");
 exports.apiRouter = (0, express_1.Router)();
 exports.apiRouter.use('/auth', authRoutes_1.authRoutes);
 exports.apiRouter.use('/users', userRoutes_1.userRoutes);
@@ -23,4 +26,7 @@ exports.apiRouter.use('/payments', paymentRoutes_1.paymentRoutes);
 exports.apiRouter.use('/recommendations', recommendationRoutes_1.recommendationRoutes);
 exports.apiRouter.use('/analytics', analyticsRoutes_1.analyticsRoutes);
 exports.apiRouter.use('/notifications', notificationRoutes_1.notificationRoutes);
+exports.apiRouter.use('/metadata', movieRoutes_1.movieRoutes);
+exports.apiRouter.use('/player', playerRoutes_1.playerRoutes);
+exports.apiRouter.use('/subtitles', subtitleRoutes_1.subtitleRoutes);
 //# sourceMappingURL=index.js.map

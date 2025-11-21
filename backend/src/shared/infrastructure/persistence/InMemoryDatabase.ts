@@ -29,12 +29,20 @@ export type SubscriptionRecord = {
   renewsAt: Date;
 };
 
+export type WatchProgressRecord = {
+  userId: string;
+  movieId: number;
+  progress: number; // 0-1
+  updatedAt: Date;
+};
+
 export class InMemoryDatabase {
   private static instance: InMemoryDatabase;
 
   public readonly users = new Map<string, UserRecord>();
   public readonly videos = new Map<string, VideoRecord>();
   public readonly subscriptions = new Map<string, SubscriptionRecord>();
+  public readonly watchProgress = new Map<string, WatchProgressRecord>(); // key: `${userId}:${movieId}`
 
   private constructor() {
     this.seed();

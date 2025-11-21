@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
-const ValidationError_1 = require("../../../../shared/domain/errors/ValidationError");
+const NotFoundError_1 = require("../../../../shared/domain/errors/NotFoundError");
 class UserService {
     constructor(userRepository) {
         this.userRepository = userRepository;
@@ -9,14 +9,14 @@ class UserService {
     async getProfile(userId) {
         const user = await this.userRepository.findById(userId);
         if (!user) {
-            throw new ValidationError_1.ValidationError('Usuário não encontrado');
+            throw new NotFoundError_1.NotFoundError('Usuário', userId);
         }
         return user.toSafeJSON();
     }
     async updatePreferences(userId, preferences) {
         const user = await this.userRepository.findById(userId);
         if (!user) {
-            throw new ValidationError_1.ValidationError('Usuário não encontrado');
+            throw new NotFoundError_1.NotFoundError('Usuário', userId);
         }
         const updated = await this.userRepository.update(user.withPreferences(preferences));
         return updated.toSafeJSON();
@@ -24,7 +24,7 @@ class UserService {
     async getHistory(userId) {
         const user = await this.userRepository.findById(userId);
         if (!user) {
-            throw new ValidationError_1.ValidationError('Usuário não encontrado');
+            throw new NotFoundError_1.NotFoundError('Usuário', userId);
         }
         return user.history;
     }

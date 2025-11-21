@@ -42,9 +42,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     try {
       const profile = await userService.getProfile();
       setUser(profile);
-    } catch {
-      clearTokens();
-      setUser(null);
+    } catch (error) {
+      // Se o erro for 401 ou 404, limpa os tokens
+      // Outros erros podem ser temporários
+      if (error instanceof Error && error.message.includes('401')) {
+        clearTokens();
+        setUser(null);
+      } else if (error instanceof Error && error.message.includes('404')) {
+        // Usuário não encontrado - token pode ser inválido
+        clearTokens();
+        setUser(null);
+      } else {
+        // Outros erros - mantém token mas não define usuário
+        setUser(null);
+      }
     } finally {
       setLoading(false);
     }

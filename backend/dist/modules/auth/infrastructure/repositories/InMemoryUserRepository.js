@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.InMemoryUserRepository = void 0;
 const InMemoryDatabase_1 = require("../../../../shared/infrastructure/persistence/InMemoryDatabase");
 const User_1 = require("../../domain/entities/User");
+const NotFoundError_1 = require("../../../../shared/domain/errors/NotFoundError");
 class InMemoryUserRepository {
     constructor() {
         this.db = InMemoryDatabase_1.InMemoryDatabase.getInstance();
@@ -30,7 +31,7 @@ class InMemoryUserRepository {
     async update(user) {
         const record = this.db.users.get(user.id);
         if (!record) {
-            throw new Error('User not found');
+            throw new NotFoundError_1.NotFoundError('Usuário', user.id);
         }
         this.db.users.set(user.id, {
             ...record,

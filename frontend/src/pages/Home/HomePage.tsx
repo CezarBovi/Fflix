@@ -5,29 +5,29 @@ import { Hero } from '../../components/Hero/Hero';
 import { Button } from '../../shared/components/Button/Button';
 import { VideoCard } from '../../components/VideoCard/VideoCard';
 import { Section } from '../../components/Section/Section';
-import { contentService } from '../../services/api/contentService';
+import { metadataService } from '../../services/api/metadataService';
 import { useAuth } from '../../app/providers/AuthProvider';
 import { LoginForm } from '../../features/auth/components/LoginForm/LoginForm';
+import type { MovieMetadata } from '../../shared/types';
 
 export const HomePage = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { data: videos = [], isLoading } = useQuery({
-    queryKey: ['videos'],
-    queryFn: () => contentService.list(),
+  const { data: trending = [], isLoading: loadingTrending } = useQuery({
+    queryKey: ['movies', 'trending'],
+    queryFn: () => metadataService.getTrending(),
   });
 
-  const featured = videos[0];
+  const featured = trending[0];
 
   const continueWatching = useMemo(() => {
-    if (!user) {
+    if (!user || !user.history.length) {
       return [];
     }
-    return user.history
-      .map((entry) => videos.find((video) => video.id === entry.videoId))
-      .filter(Boolean)
-      .slice(0, 6) as typeof videos;
-  }, [user, videos]);
+    // Para "continue watching", precisamos buscar os filmes pelos IDs do histórico
+    // Por enquanto, retornamos vazio - pode ser implementado com queries paralelas
+    return [];
+  }, [user]);
 
   return (
     <div className="page-stack">
@@ -43,19 +43,19 @@ export const HomePage = () => {
       />
       <div className="home-grid">
         <div>
-          <Section title="Lançamentos" description="Catálogo publicado via Content Service.">
-            {isLoading
+          <Section title="Em Alta" description="Filmes populares do TMDb.">
+            {loadingTrending
               ? [...Array(4)].map((_, index) => (
                   <div className="skeleton-card" key={index} />
                 ))
-              : videos.map((video) => <VideoCard key={video.id} video={video} />)}
+              : trending.map((movie) => <VideoCard key={movie.id} video={movie} />)}
           </Section>
           {continueWatching.length ? (
             <Section title="Continue assistindo" description="Sincronizado entre devices.">
-              {continueWatching.map((video) => (
+              {continueWatching.map((movie) => (
                 <VideoCard
-                  key={video.id}
-                  video={video}
+                  key={movie.id}
+                  video={movie}
                   subtitle="Em andamento"
                 />
               ))}

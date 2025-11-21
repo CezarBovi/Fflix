@@ -8,6 +8,7 @@ class InMemoryDatabase {
         this.users = new Map();
         this.videos = new Map();
         this.subscriptions = new Map();
+        this.watchProgress = new Map(); // key: `${userId}:${movieId}`
         this.seed();
     }
     static getInstance() {
