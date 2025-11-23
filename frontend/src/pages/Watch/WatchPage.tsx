@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect, useRef } from 'react';
+import { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useAuth } from '../../app/providers/AuthProvider';
@@ -72,78 +72,9 @@ export const WatchPage = () => {
     return Math.round(progressQuery.data.progress * 100);
   }, [progressQuery.data]);
 
-  // Estado para detectar se o player falhou ao carregar
-  const [playerLoadError, setPlayerLoadError] = useState(false);
-  const iframeRef = useRef<HTMLIFrameElement>(null);
-  const loadTimeoutRef = useRef<number | null>(null);
-
-  // Resetar erro quando o embedSource mudar
-  useEffect(() => {
-    if (embedSource) {
-      setPlayerLoadError(false);
-    }
-  }, [embedSource]);
-
-  // Detectar erros de carregamento do iframe
-  useEffect(() => {
-    if (!embedSource || playerLoadError) {
-      return;
-    }
-
-    // Listener global para capturar erros de recursos (como 404 no sandbox.php)
-    const handleError = (event: ErrorEvent) => {
-      // Verificar se o erro é relacionado ao player (sandbox.php ou streamingnow.mov)
-      const errorMessage = event.message || '';
-      const errorSource = (event.filename || '').toLowerCase();
-      
-      if (
-        errorSource.includes('sandbox.php') ||
-        errorSource.includes('streamingnow.mov') ||
-        errorMessage.includes('sandbox') ||
-        errorMessage.includes('streamingnow')
-      ) {
-        // Erro relacionado ao player - marcar como erro após um delay
-        // para dar tempo do iframe tentar carregar outros recursos
-        setTimeout(() => {
-          setPlayerLoadError(true);
-        }, 5000); // Aguardar 5 segundos antes de marcar como erro
-      }
-    };
-
-    // Listener para erros de recursos
-    window.addEventListener('error', handleError, true);
-
-    // Timeout de segurança: se após 15 segundos não detectamos carregamento, considerar erro
-    loadTimeoutRef.current = window.setTimeout(() => {
-      // Se ainda não detectamos erro, verificar se o iframe está visível
-      if (iframeRef.current) {
-        const rect = iframeRef.current.getBoundingClientRect();
-        // Se o iframe tem dimensões muito pequenas, pode não ter carregado
-        if (rect.height < 100) {
-          setPlayerLoadError(true);
-        }
-      }
-    }, 15000);
-
-    return () => {
-      window.removeEventListener('error', handleError, true);
-      if (loadTimeoutRef.current) {
-        clearTimeout(loadTimeoutRef.current);
-      }
-    };
-  }, [embedSource, playerLoadError]);
-
-  const handleIframeLoad = () => {
-    if (loadTimeoutRef.current) {
-      clearTimeout(loadTimeoutRef.current);
-    }
-    setPlayerLoadError(false);
-  };
-
-  const handleIframeError = () => {
-    setPlayerLoadError(true);
-    if (loadTimeoutRef.current) {
-      clearTimeout(loadTimeoutRef.current);
+  const handleOpenPlayer = () => {
+    if (embedSource?.embedUrl) {
+      window.open(embedSource.embedUrl, '_blank', 'noopener,noreferrer');
     }
   };
 
@@ -180,50 +111,60 @@ export const WatchPage = () => {
               Tentar novamente
             </Button>
           </div>
-        ) : playerLoadError ? (
-          <div
-            style={{
-              width: '100%',
-              minHeight: '60vh',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: 'rgba(0, 0, 0, 0.5)',
-              borderRadius: '12px',
-              padding: '2rem',
-              textAlign: 'center',
-            }}
-          >
-            <p style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>
-              Conteúdo não disponível
-            </p>
-            <p style={{ marginBottom: '1.5rem', opacity: 0.8, fontSize: '0.9rem' }}>
-              O filme não está disponível no serviço de streaming no momento.
-              <br />
-              Isso pode acontecer se o conteúdo não estiver disponível no SuperEmbed.
-            </p>
-            <Button variant="secondary" onClick={() => {
-              setPlayerLoadError(false);
-              refetchEmbed();
-            }}>
-              Tentar novamente
-            </Button>
-          </div>
         ) : (
           <>
-            <iframe
-              ref={iframeRef}
-              title={`Player ${movie.title}`}
-              src={embedSource!.embedUrl}
-              referrerPolicy="origin"
-              allow="autoplay; encrypted-media; fullscreen; picture-in-picture; clipboard-write"
-              sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-top-navigation-by-user-activation allow-presentation"
-              allowFullScreen
-              style={{ width: '100%', minHeight: '60vh', border: 'none', borderRadius: '12px' }}
-              onLoad={handleIframeLoad}
-              onError={handleIframeError}
-            />
+            <div
+              style={{
+                width: '100%',
+                minHeight: '60vh',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                borderRadius: '12px',
+                padding: '3rem 2rem',
+                textAlign: 'center',
+                border: '1px solid rgba(255, 255, 255, 0.12)',
+              }}
+            >
+              <div style={{ marginBottom: '2rem' }}>
+                <svg
+                  width="64"
+                  height="64"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  style={{ color: '#ff4d6d', marginBottom: '1rem' }}
+                >
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+                <h2 style={{ marginBottom: '0.5rem', fontSize: '1.5rem' }}>
+                  Assistir {movie.title}
+                </h2>
+                <p style={{ opacity: 0.8, fontSize: '0.95rem', marginBottom: '1.5rem' }}>
+                  Clique no botão abaixo para abrir o player em uma nova aba
+                </p>
+              </div>
+              <Button
+                onClick={handleOpenPlayer}
+                style={{
+                  padding: '1rem 2.5rem',
+                  fontSize: '1.1rem',
+                  fontWeight: 600,
+                }}
+              >
+                ▶ Abrir Player
+              </Button>
+              {embedSource.quality && (
+                <p style={{ marginTop: '1rem', opacity: 0.6, fontSize: '0.85rem' }}>
+                  Qualidade: {embedSource.quality}
+                </p>
+              )}
+            </div>
             <div className="player-meta">
               <h1>{movie.title}</h1>
               <p>{movie.overview}</p>
