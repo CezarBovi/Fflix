@@ -1,9 +1,11 @@
-import { useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import { useMemo, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useAuth } from '../../app/providers/AuthProvider';
 import { VideoCard } from '../../components/VideoCard/VideoCard';
 import { Button } from '../../shared/components/Button/Button';
+import { Modal } from '../../shared/components/Modal/Modal';
+import { PlayerApiSelector, type StreamingApi } from './components/PlayerApiSelector';
 import {
   metadataService,
   playerService,
@@ -12,6 +14,7 @@ import {
 
 export const WatchPage = () => {
   const { videoId } = useParams<{ videoId: string }>();
+  const navigate = useNavigate();
   const movieId = Number(videoId);
   const isValidId = Number.isFinite(movieId);
   const { user } = useAuth();
@@ -72,10 +75,24 @@ export const WatchPage = () => {
     return Math.round(progressQuery.data.progress * 100);
   }, [progressQuery.data]);
 
+  const [isApiSelectorOpen, setIsApiSelectorOpen] = useState(false);
+
   const handleOpenPlayer = () => {
-    if (embedSource?.embedUrl) {
-      window.open(embedSource.embedUrl, '_blank', 'noopener,noreferrer');
+    setIsApiSelectorOpen(true);
+  };
+
+  const handleApiSelect = (api: StreamingApi, url: string) => {
+    if (api === 'superflix' && movie?.imdbId) {
+      // Para SuperFlix, navegar para a página dedicada com iframe
+      const normalizedImdbId = movie.imdbId.startsWith('tt') 
+        ? movie.imdbId 
+        : `tt${movie.imdbId}`;
+      navigate(`/player/superflix/${normalizedImdbId}`);
+    } else {
+      // Para SuperEmbed e LetsEmbed, abrir em nova aba
+      window.open(url, '_blank', 'noopener,noreferrer');
     }
+    setIsApiSelectorOpen(false);
   };
 
   if (!videoId || !isValidId) {
@@ -146,7 +163,7 @@ export const WatchPage = () => {
                   Assistir {movie.title}
                 </h2>
                 <p style={{ opacity: 0.8, fontSize: '0.95rem', marginBottom: '1.5rem' }}>
-                  Clique no botão abaixo para abrir o player em uma nova aba
+                  Clique no botão abaixo para escolher uma API de streaming
                 </p>
               </div>
               <Button
@@ -157,7 +174,7 @@ export const WatchPage = () => {
                   fontWeight: 600,
                 }}
               >
-                ▶ Abrir Player
+                ▶ Assistir Agora
               </Button>
               {embedSource.quality && (
                 <p style={{ marginTop: '1rem', opacity: 0.6, fontSize: '0.85rem' }}>
@@ -165,6 +182,20 @@ export const WatchPage = () => {
                 </p>
               )}
             </div>
+            <Modal
+              isOpen={isApiSelectorOpen}
+              onClose={() => setIsApiSelectorOpen(false)}
+              title="Escolher API de Streaming"
+            >
+              <PlayerApiSelector
+                imdbId={movie?.imdbId}
+                movieId={movie.id}
+                movieTitle={movie.title}
+                superEmbedUrl={embedSource.embedUrl}
+                onSelect={handleApiSelect}
+                onClose={() => setIsApiSelectorOpen(false)}
+              />
+            </Modal>
             <div className="player-meta">
               <h1>{movie.title}</h1>
               <p>{movie.overview}</p>
