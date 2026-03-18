@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(7, 22, 37, 0.35);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -14,14 +14,14 @@
 }
 
 .modal {
-  background: rgba(6, 8, 20, 0.95);
+  background: rgba(247, 251, 255, 0.98);
   border-radius: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(9, 30, 66, 0.12);
   max-width: 600px;
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 20px 60px rgba(9, 30, 66, 0.22);
 }
 
 .header {
@@ -29,7 +29,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 1.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(9, 30, 66, 0.08);
 }
 
 .header h2 {
@@ -41,7 +41,7 @@
 .closeButton {
   background: transparent;
   border: none;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(7, 22, 37, 0.65);
   font-size: 2rem;
   line-height: 1;
   cursor: pointer;
@@ -56,8 +56,8 @@
 }
 
 .closeButton:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  background: rgba(27, 110, 234, 0.12);
+  color: #071625;
 }
 
 .content {

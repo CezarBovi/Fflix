@@ -5,6 +5,6 @@ import { logger } from './shared/utils/logger';
 const app = createApp();
 
 app.listen(env.port, () => {
-  logger.info(`FFlix API rodando na porta ${env.port}`);
+  logger.info(`CryoFlix API rodando na porta ${env.port}`);
 });
 

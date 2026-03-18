@@ -1,4 +1,4 @@
-# FFlix – Plataforma de Streaming
+# CryoFlix – Plataforma de Streaming
 
 Monorepo contendo:
 
@@ -71,7 +71,7 @@ TMDB_BASE_URL=https://api.themoviedb.org/3
 SUPEREMBED_BASE_URL=https://multiembed.mov
 OPENSUBTITLES_API_KEY=
 OPENSUBTITLES_USERNAME=
-OPENSUBTITLES_USER_AGENT=FFlix/1.0
+OPENSUBTITLES_USER_AGENT=CryoFlix/1.0
 
 # Redis (opcional - usa cache em memória se não configurado)
 REDIS_HOST=localhost

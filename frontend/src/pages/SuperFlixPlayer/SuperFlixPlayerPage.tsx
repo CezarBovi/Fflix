@@ -1,17 +1,15 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { superFlixApiService } from '../../services/api/superFlixApiService';
 import styles from './SuperFlixPlayerPage.module.css';
 
 export const SuperFlixPlayerPage = () => {
   const { imdbId } = useParams<{ imdbId: string }>();
   const navigate = useNavigate();
 
-  // Normalizar IMDb ID (garantir que tenha o prefixo 'tt')
-  const normalizedImdbId = imdbId?.startsWith('tt') ? imdbId : `tt${imdbId}`;
-  const playerUrl = `https://superflixapi.asia/filme/${normalizedImdbId}`;
+  const playerUrl = imdbId ? superFlixApiService.getMoviePlayerUrl(imdbId) : '';
 
   useEffect(() => {
-    // Prevenir scroll da página quando o iframe estiver carregado
     document.body.style.overflow = 'hidden';
     return () => {
       document.body.style.overflow = 'unset';
@@ -42,9 +40,12 @@ export const SuperFlixPlayerPage = () => {
           src={playerUrl}
           title="SuperFlix Player"
           className={styles.player}
+          width="100%"
+          height="500"
           allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
           allowFullScreen
-          frameBorder="0"
+          scrolling="no"
+          frameBorder={0}
         />
       </div>
     </div>

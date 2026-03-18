@@ -7,6 +7,7 @@ const config: Config = {
   },
   testEnvironment: 'node',
   roots: ['<rootDir>/tests'],
+  setupFiles: ['<rootDir>/tests/jest.setup.ts'],
   clearMocks: true,
   collectCoverageFrom: ['src/**/*.ts', '!src/**/index.ts'],
   moduleFileExtensions: ['ts', 'js', 'json'],

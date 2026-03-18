@@ -13,7 +13,7 @@ export default defineConfig([
     languageOptions: {
       parser: tsParser,
       parserOptions: {
-        project: './tsconfig.json',
+        // Sem type-aware lint aqui para evitar problemas com arquivos fora do tsconfig
       },
       globals: globals.browser,
     },
@@ -22,6 +22,8 @@ export default defineConfig([
     },
     rules: {
       ...tseslint.configs.recommended.rules,
+      'no-unused-vars': 'off',
+      'no-undef': 'off',
       '@typescript-eslint/no-unused-vars': [
         'warn',
         { argsIgnorePattern: '^_', varsIgnorePattern: '^[A-Z_]' },
@@ -29,7 +31,19 @@ export default defineConfig([
     },
   },
   {
-    files: ['**/*.{ts,tsx,jsx,js}'],
+    files: ['**/*.{ts,tsx}'],
+    extends: [reactHooks.configs['recommended-latest'], reactRefresh.configs.vite],
+    languageOptions: {
+      globals: globals.browser,
+    },
+    rules: {
+      'react-refresh/only-export-components': 'off',
+      'no-unused-vars': 'off',
+      'no-undef': 'off',
+    },
+  },
+  {
+    files: ['**/*.{js,jsx}'],
     extends: [
       js.configs.recommended,
       reactHooks.configs['recommended-latest'],
@@ -37,6 +51,9 @@ export default defineConfig([
     ],
     languageOptions: {
       globals: globals.browser,
+    },
+    rules: {
+      'react-refresh/only-export-components': 'off',
     },
   },
 ]);

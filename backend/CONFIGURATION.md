@@ -1,4 +1,4 @@
-# Guia de Configuração - FFlix Backend
+# Guia de Configuração - CryoFlix Backend
 
 ## Variáveis de Ambiente
 
@@ -16,7 +16,7 @@ REFRESH_SECRET=super-refresh-key-change-in-production
 REFRESH_EXPIRES_IN=7d
 
 # CDN
-CDN_BASE_URL=https://cdn.fflix.local
+CDN_BASE_URL=https://cdn.cryoflix.local
 
 # TMDb API
 # Obtenha sua chave em: https://www.themoviedb.org/settings/api
@@ -29,8 +29,8 @@ SUPEREMBED_BASE_URL=https://multiembed.mov
 # OpenSubtitles API
 # Obtenha sua chave em: https://www.opensubtitles.com/en/consumers
 OPENSUBTITLES_API_KEY=your_opensubtitles_api_key_here
-OPENSUBTITLES_USERNAME=fflix-demo
-OPENSUBTITLES_USER_AGENT=FFlix/1.0
+OPENSUBTITLES_USERNAME=cryoflix-demo
+OPENSUBTITLES_USER_AGENT=CryoFlix/1.0
 
 # Redis (opcional - cache em memória será usado se não configurado)
 REDIS_HOST=localhost

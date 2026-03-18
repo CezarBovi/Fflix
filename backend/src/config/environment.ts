@@ -18,7 +18,7 @@ export const env = {
   jwtExpiresIn: getEnv('JWT_EXPIRES_IN', '15m') as StringValue,
   refreshSecret: getEnv('REFRESH_SECRET', 'super-refresh-key'),
   refreshExpiresIn: getEnv('REFRESH_EXPIRES_IN', '7d') as StringValue,
-  cdnBaseUrl: getEnv('CDN_BASE_URL', 'https://cdn.fflix.local'),
+  cdnBaseUrl: getEnv('CDN_BASE_URL', 'https://cdn.cryoflix.local'),
   tmdb: {
     apiKey: getEnv('TMDB_API_KEY', ''),
     baseUrl: getEnv('TMDB_BASE_URL', 'https://api.themoviedb.org/3'),
@@ -28,8 +28,8 @@ export const env = {
   },
   openSubtitles: {
     apiKey: getEnv('OPENSUBTITLES_API_KEY', ''),
-    username: getEnv('OPENSUBTITLES_USERNAME', 'fflix-demo'),
-    userAgent: getEnv('OPENSUBTITLES_USER_AGENT', 'FFlix/1.0'),
+    username: getEnv('OPENSUBTITLES_USERNAME', 'cryoflix-demo'),
+    userAgent: getEnv('OPENSUBTITLES_USER_AGENT', 'CryoFlix/1.0'),
   },
   redis: {
     host: getEnv('REDIS_HOST', 'localhost'),

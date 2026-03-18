@@ -10,6 +10,7 @@ import {
   metadataService,
   playerService,
   subtitleService,
+  tmdbService,
 } from '../../services/api';
 
 export const WatchPage = () => {
@@ -42,6 +43,13 @@ export const WatchPage = () => {
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
     staleTime: 300000,
+  });
+
+  const { data: brazilDubInfo } = useQuery({
+    queryKey: ['tmdb-brazil-dub', movie?.id],
+    queryFn: () => tmdbService.getBrazilianDubInfoByMovieId(movie!.id),
+    enabled: Boolean(movie?.id),
+    staleTime: 24 * 60 * 60 * 1000, // 24h
   });
 
   const {
@@ -155,7 +163,7 @@ export const WatchPage = () => {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  style={{ color: '#ff4d6d', marginBottom: '1rem' }}
+                  style={{ color: '#1b6eea', marginBottom: '1rem' }}
                 >
                   <polygon points="5 3 19 12 5 21 5 3"></polygon>
                 </svg>
@@ -206,6 +214,17 @@ export const WatchPage = () => {
                   : 'Indisponível'}{' '}
                 • Nota TMDb: {movie.voteAverage.toFixed(1)}
               </small>
+              <div style={{ marginTop: '0.25rem', marginBottom: '0.75rem' }}>
+                {brazilDubInfo?.hasBrazilianDub ? (
+                  <span style={{ fontSize: '0.85rem', color: '#4caf50' }}>
+                    Dublagem BR oficial disponível (dados TMDB)
+                  </span>
+                ) : (
+                  <span style={{ fontSize: '0.85rem', opacity: 0.6 }}>
+                    Informação de dublagem BR oficial indisponível
+                  </span>
+                )}
+              </div>
               <div className="player-actions">
                 <Button
                   onClick={() => saveProgress.mutate(1)}

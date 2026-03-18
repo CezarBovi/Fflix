@@ -1,4 +1,5 @@
 import { Button } from '../../../shared/components/Button/Button';
+import { superFlixApiService } from '../../../services/api/superFlixApiService';
 import styles from './PlayerApiSelector.module.css';
 
 export type StreamingApi = 'superembed' | 'superflix' | 'letsembed';
@@ -22,9 +23,7 @@ export const PlayerApiSelector = ({
 }: PlayerApiSelectorProps) => {
   const getSuperFlixUrl = (): string | null => {
     if (!imdbId) return null;
-    // Garantir que o IMDb ID tenha o prefixo 'tt'
-    const normalizedImdbId = imdbId.startsWith('tt') ? imdbId : `tt${imdbId}`;
-    return `https://superflixapi.asia/filme/${normalizedImdbId}`;
+    return superFlixApiService.getMoviePlayerUrl(imdbId);
   };
 
   const getLetsEmbedUrl = (): string => {
@@ -68,7 +67,7 @@ export const PlayerApiSelector = ({
               <span className={styles.badge}>Dublado</span>
             </div>
             <p className={styles.optionDescription}>
-              Catálogo completo de filmes dublados em português com alta qualidade.
+              Catálogo completo de filmes, séries e animes dublados em português com alta qualidade. Suporta personalização do player.
             </p>
             <Button
               variant="secondary"

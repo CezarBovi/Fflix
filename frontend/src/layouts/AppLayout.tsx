@@ -16,7 +16,7 @@ export const AppLayout = () => {
     <div className="app-container">
       <header className="app-header">
         <div className="logo" role="button" onClick={() => navigate('/')}>
-          FFlix
+          CryoFlix
         </div>
         <nav>
           {navItems.map((item) => (
@@ -42,7 +42,7 @@ export const AppLayout = () => {
         <Outlet />
       </main>
       <footer className="app-footer">
-        <small>© {new Date().getFullYear()} FFlix Streaming</small>
+        <small>© {new Date().getFullYear()} CryoFlix Streaming</small>
       </footer>
     </div>
   );

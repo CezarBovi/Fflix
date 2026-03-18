@@ -8,7 +8,6 @@ import { Section } from '../../components/Section/Section';
 import { metadataService } from '../../services/api/metadataService';
 import { useAuth } from '../../app/providers/AuthProvider';
 import { LoginForm } from '../../features/auth/components/LoginForm/LoginForm';
-import type { MovieMetadata } from '../../shared/types';
 
 export const HomePage = () => {
   const navigate = useNavigate();

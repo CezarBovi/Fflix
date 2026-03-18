@@ -12,7 +12,7 @@ export const Hero = ({ title, description, background, cta }: HeroProps) => (
     className="hero-banner"
     style={{
       backgroundImage: background
-        ? `linear-gradient(120deg, rgba(2,4,15,0.85), rgba(2,4,15,0.45)), url(${background})`
+        ? `linear-gradient(120deg, rgba(255, 255, 255, 0.92), rgba(232, 242, 255, 0.55)), url(${background})`
         : undefined,
     }}
   >
