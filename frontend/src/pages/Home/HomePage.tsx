@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Hero } from '../../components/Hero/Hero';
@@ -18,15 +17,6 @@ export const HomePage = () => {
   });
 
   const featured = trending[0];
-
-  const continueWatching = useMemo(() => {
-    if (!user || !user.history.length) {
-      return [];
-    }
-    // Para "continue watching", precisamos buscar os filmes pelos IDs do histórico
-    // Por enquanto, retornamos vazio - pode ser implementado com queries paralelas
-    return [];
-  }, [user]);
 
   return (
     <div className="page-stack">
@@ -49,17 +39,6 @@ export const HomePage = () => {
                 ))
               : trending.map((movie) => <VideoCard key={movie.id} video={movie} />)}
           </Section>
-          {continueWatching.length ? (
-            <Section title="Continue assistindo" description="Sincronizado entre devices.">
-              {continueWatching.map((movie) => (
-                <VideoCard
-                  key={movie.id}
-                  video={movie}
-                  subtitle="Em andamento"
-                />
-              ))}
-            </Section>
-          ) : null}
         </div>
         {!user ? (
           <aside className="auth-panel">

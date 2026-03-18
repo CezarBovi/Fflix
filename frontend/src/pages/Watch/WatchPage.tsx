@@ -18,7 +18,7 @@ export const WatchPage = () => {
   const navigate = useNavigate();
   const movieId = Number(videoId);
   const isValidId = Number.isFinite(movieId);
-  const { user } = useAuth();
+  const { user, refreshProfile } = useAuth();
 
   const {
     data: movie,
@@ -73,6 +73,8 @@ export const WatchPage = () => {
       playerService.saveProgress({ movieId, progress }),
     onSuccess: () => {
       progressQuery.refetch();
+      // Atualiza o perfil em memória para refletir o histórico no Home
+      refreshProfile();
     },
   });
 

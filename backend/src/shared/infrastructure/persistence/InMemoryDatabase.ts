@@ -59,6 +59,7 @@ export class InMemoryDatabase {
     const userId = randomUUID();
     const videoId = randomUUID();
     const subscriptionId = randomUUID();
+    const now = new Date();
 
     this.users.set(userId, {
       id: userId,
@@ -66,10 +67,11 @@ export class InMemoryDatabase {
       passwordHash: hashSync('Sup3rSecret!', 10),
       name: 'Demo User',
       roles: ['viewer'],
-      preferences: { language: 'pt-BR', theme: 'dark' },
+      preferences: { language: 'pt-BR', theme: 'light' },
       history: [
-        { videoId, watchedAt: new Date(), progress: 0.8 },
-        { videoId: randomUUID(), watchedAt: new Date(), progress: 0.5 },
+        // Para integrar com o catálogo TMDb, usamos IDs numéricos como string.
+        { videoId: '550', watchedAt: now, progress: 0.8 },
+        { videoId: '680', watchedAt: now, progress: 0.5 },
       ],
     });
 

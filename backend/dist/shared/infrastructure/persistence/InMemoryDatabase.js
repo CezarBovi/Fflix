@@ -21,16 +21,18 @@ class InMemoryDatabase {
         const userId = (0, crypto_1.randomUUID)();
         const videoId = (0, crypto_1.randomUUID)();
         const subscriptionId = (0, crypto_1.randomUUID)();
+        const now = new Date();
         this.users.set(userId, {
             id: userId,
             email: 'demo@fflix.io',
             passwordHash: (0, bcryptjs_1.hashSync)('Sup3rSecret!', 10),
             name: 'Demo User',
             roles: ['viewer'],
-            preferences: { language: 'pt-BR', theme: 'dark' },
+            preferences: { language: 'pt-BR', theme: 'light' },
             history: [
-                { videoId, watchedAt: new Date(), progress: 0.8 },
-                { videoId: (0, crypto_1.randomUUID)(), watchedAt: new Date(), progress: 0.5 },
+                // Para integrar com o catálogo TMDb, usamos IDs numéricos como string.
+                { videoId: '550', watchedAt: now, progress: 0.8 },
+                { videoId: '680', watchedAt: now, progress: 0.5 },
             ],
         });
         this.videos.set(videoId, {

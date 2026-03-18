@@ -21,6 +21,24 @@ export class PlayerRepository implements IPlayerRepository {
       progress: progress.progress,
       updatedAt: new Date(),
     });
+
+    // Registrar no histórico somente quando marcado como concluído.
+    if (progress.progress >= 1) {
+      const user = this.db.users.get(progress.userId);
+      if (user) {
+        const videoId = String(progress.movieId);
+        const existingIndex = user.history.findIndex((item) => item.videoId === videoId);
+        const entry = { videoId, watchedAt: new Date(), progress: 1 };
+
+        if (existingIndex >= 0) {
+          user.history.splice(existingIndex, 1);
+        }
+
+        user.history.unshift(entry);
+        user.history = user.history.slice(0, 50);
+        this.db.users.set(progress.userId, user);
+      }
+    }
   }
 
   async getProgress(userId: string, movieId: number): Promise<PlayerProgress | null> {
